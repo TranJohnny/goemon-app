@@ -6,6 +6,7 @@ const { User } = require('../../db/models');
 
 const router = express.Router();
 
+// Signup /api/users
 router.post(
   '',
   asyncHandler(async (req, res) => {
