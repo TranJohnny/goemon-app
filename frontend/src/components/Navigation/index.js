@@ -32,13 +32,17 @@ function Navigation({ isLoaded }) {
         <Nav.Link href="#home">About Us</Nav.Link>
         <Nav.Link href="#link">Dashboard</Nav.Link>
         <NavDropdown title="Account" id="basic-nav-dropdown" alignRight>
-          <NavDropdown.ItemText style={{ margin: 'auto' }}>
-            <div>
-              <Row>
-                <Col>Hello</Col>
-                <Col className="ms-1">Goodbye</Col>
-              </Row>
-            </div>
+          <NavDropdown.ItemText as="div" style={{ margin: 'auto', padding: '5%' }}>
+            <Row style={{ width: '100%' }}>
+              <Col style={{ width: '100%' }}>
+                <p style={{ margin: '0 0' }}>$0.00</p>
+                <p style={{ margin: '0 0' }}>Portfolio Value</p>
+              </Col>
+              <Col style={{ width: '100%' }}>
+                <p style={{ margin: '0 0' }}>$0.00</p>
+                <p style={{ margin: '0 0' }}>Buying Power</p>
+              </Col>
+            </Row>
           </NavDropdown.ItemText>
           <NavDropdown.Divider />
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
