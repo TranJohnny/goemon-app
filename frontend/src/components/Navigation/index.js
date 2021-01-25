@@ -1,7 +1,10 @@
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
+import { useSelector, useDispatch } from 'react-redux';
+// import ProfileButton from './ProfileButton';
+// import { useState, useEffect } from 'react';
+import * as sessionActions from '../../store/session';
+
 import './Navigation.css';
+import { NavLink } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -11,38 +14,55 @@ import Button from 'react-bootstrap/Button';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
+
+  const logout = (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.logout());
+  };
 
   let sessionLinks;
   let searchBar;
   if (sessionUser) {
     // sessionLinks = <ProfileButton user={sessionUser} />;
     sessionLinks = (
-      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-      </NavDropdown>
+      <>
+        <Nav.Link href="#home">About Us</Nav.Link>
+        <Nav.Link href="#link">Dashboard</Nav.Link>
+        <NavDropdown title="Account" id="basic-nav-dropdown">
+          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item>
+            <Button onClick={logout}>
+              <i class="fas fa-sign-out-alt"></i> Log Out
+            </Button>
+          </NavDropdown.Item>
+        </NavDropdown>
+      </>
     );
     searchBar = (
-      <form className="d-flex">
-        <input
-          className="form-control me-2"
-          type="search"
-          placeholder="Search Stocks"
-          aria-label="Search"
-        />
-        <button className="btn btn-outline-success" type="submit">
-          Search
-        </button>
-      </form>
+      <Form inline>
+        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+        <Button variant="outline-success">
+          <i class="fas fa-search"></i>
+        </Button>
+      </Form>
     );
   } else {
     sessionLinks = (
       <>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
+        <NavLink to="/login" className="nav-link">
+          Log In
+        </NavLink>
+        <NavLink to="/signup" className="nav-link">
+          Sign Up
+        </NavLink>
+        {/* <Nav.Link>
+        </Nav.Link>
+        <Nav.Link>
+        </Nav.Link> */}
       </>
     );
   }
@@ -52,15 +72,8 @@ function Navigation({ isLoaded }) {
       <Navbar.Brand href="#home">Goemon</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
-        </Form>
-        <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
-          {isLoaded && sessionLinks}
-        </Nav>
+        {isLoaded && searchBar}
+        <Nav className="mr-auto">{isLoaded && sessionLinks}</Nav>
       </Navbar.Collapse>
     </Navbar>
   );
