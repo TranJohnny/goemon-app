@@ -61,20 +61,24 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <NavLink to="/login" className="nav-link">
+        <Nav.Link as={NavLink} to="/login" size="lg">
           Log In
-        </NavLink>
-        <NavLink to="/signup" className="nav-link">
+        </Nav.Link>
+        <Button as={NavLink} to="/signup" className="btn" style={{ borderRadius: '24px' }}>
           Sign Up
-        </NavLink>
+        </Button>
       </>
     );
+    searchBar = <div></div>;
   }
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">Goemon</Navbar.Brand>
+      <Navbar.Brand as={NavLink} to="/">
+        Goemon
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <div></div>
       <Navbar.Collapse id="basic-navbar-nav" className="d-flex justify-content-between ms-1">
         {isLoaded && searchBar}
         <Nav>{isLoaded && sessionLinks}</Nav>

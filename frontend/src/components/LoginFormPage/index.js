@@ -30,45 +30,55 @@ function LoginFormPage() {
   };
 
   return (
-    <Container fluid>
-      <Row>
-        <Col className="img-col">
-          <Image src="images/login-splash.jpg" fluid />
+    <Container style={{ maxWidth: '100%', margin: '0', padding: '0' }}>
+      <Row style={{ flexWrap: 'none' }}>
+        <Col className="img-col" style={{ maxHeight: '100vh' }}>
+          <Image
+            src="images/login-splash.jpg"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              overflow: 'hidden',
+            }}
+          />
         </Col>
-        <Col style={{ padding: '10%' }}>
-          <h2>Welcome to Goemon</h2>
-          <Form onSubmit={handleSubmit}>
-            <div>
-              {errors.map((error, idx) => (
-                <Alert variant="danger">
-                  <p key={idx}>{error}</p>
-                </Alert>
-              ))}
-            </div>
-            <Form.Group>
-              <Form.Label>Email or Username</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter email or username"
-                value={credential}
-                onChange={(e) => setCredential(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Log In
-            </Button>
-          </Form>
+        <Col>
+          <div style={{ margin: '30% 5%', width: '55%' }}>
+            <Form onSubmit={handleSubmit}>
+              <h3>Welcome to Goemon</h3>
+              <div>
+                {errors.map((error, idx) => (
+                  <Alert variant="danger">
+                    <p key={idx}>{error}</p>
+                  </Alert>
+                ))}
+              </div>
+              <Form.Group>
+                <Form.Label>Email or Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter email or username"
+                  value={credential}
+                  onChange={(e) => setCredential(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Button variant="primary" type="submit" size="lg">
+                Log In
+              </Button>
+            </Form>
+          </div>
         </Col>
       </Row>
     </Container>
