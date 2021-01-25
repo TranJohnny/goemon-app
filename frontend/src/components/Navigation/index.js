@@ -64,7 +64,12 @@ function Navigation({ isLoaded }) {
         <Nav.Link as={NavLink} to="/login" size="lg">
           Log In
         </Nav.Link>
-        <Button as={NavLink} to="/signup" className="btn" style={{ borderRadius: '24px' }}>
+        <Button
+          as={NavLink}
+          to="/signup"
+          className="btn"
+          style={{ borderRadius: '24px', padding: '6px 18px', margin: '0px 15px' }}
+        >
           Sign Up
         </Button>
       </>
