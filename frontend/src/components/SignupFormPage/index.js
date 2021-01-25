@@ -22,7 +22,7 @@ function SignupFormPage() {
   const [errors, setErrors] = useState([]);
 
   if (sessionUser) {
-    return <Redirect to="/" />;
+    return <Redirect to="/dashboard" />;
   }
 
   const handleSubmit = (e) => {
