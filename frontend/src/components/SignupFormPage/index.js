@@ -43,7 +43,7 @@ function SignupFormPage() {
   return (
     <Container style={{ maxWidth: '100%', margin: '0', padding: '0' }}>
       <Row style={{ flexWrap: 'none' }}>
-        <Col className="img-col" style={{ maxHeight: '100vh' }}>
+        <Col style={{ maxHeight: '100vh' }}>
           <div style={{ margin: '10% 5%', width: '55%' }}>
             <h3>Make your money move</h3>
             <p>Goemon lets you invest in companies you love!</p>

@@ -72,7 +72,12 @@ function Navigation({ isLoaded }) {
           as={NavLink}
           to="/signup"
           className="btn"
-          style={{ borderRadius: '24px', padding: '6px 18px', margin: '0px 15px' }}
+          style={{
+            borderRadius: '24px',
+            padding: '6px 18px',
+            margin: '0px 15px',
+            maxWidth: '94px',
+          }}
         >
           Sign Up
         </Button>
@@ -82,15 +87,17 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar collapseOnSelect bg="light" expand="lg" className="d-flex justify-content-between ms-1">
       <Navbar.Brand as={NavLink} to="/">
         Goemon
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <div></div>
-      <Navbar.Collapse id="basic-navbar-nav" className="d-flex justify-content-between ms-1">
-        {isLoaded && searchBar}
-        <Nav>{isLoaded && sessionLinks}</Nav>
+      <Navbar.Collapse id="basic-navbar-nav" className="">
+        <Nav className="d-flex justify-content-between ms-1" style={{ width: '100%' }}>
+          <Nav></Nav>
+          <Nav>{isLoaded && searchBar}</Nav>
+          <Nav>{isLoaded && sessionLinks}</Nav>
+        </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
