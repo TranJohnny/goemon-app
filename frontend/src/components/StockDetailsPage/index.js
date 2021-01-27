@@ -6,16 +6,18 @@ import { getOneStock } from '../../store/stock';
 function StockDetailsPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const stock = useSelector((state) => state.stock);
+  const stock = useSelector((state) => state.stock.stock);
 
   useEffect(() => {
-    console.log('use effect ran');
     dispatch(getOneStock(id));
+    console.log(stock);
   }, [dispatch]);
 
   return (
     <>
       <div>Stock Page with id of {id}</div>
+      <div>{stock.name}</div>
+      <div>{stock.ticker}</div>
     </>
   );
 }
