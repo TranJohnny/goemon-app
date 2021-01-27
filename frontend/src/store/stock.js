@@ -8,7 +8,7 @@ const addOneStock = (stock) => ({
 });
 
 export const getOneStock = (id) => async (dispatch) => {
-  const response = await fetch(`http://localhost:5000/api/stocks/${id}`, {
+  const response = await fetch(`/api/stocks/${id}`, {
     headers: {
       accepts: 'application/json',
     },
