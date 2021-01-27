@@ -6,6 +6,20 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [1, 50],
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [1, 50],
+        },
+      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -51,10 +65,23 @@ module.exports = (sequelize, DataTypes) => {
   );
   User.associate = function (models) {
     // associations can be defined here
+    const columnMapping1 = {
+      through: 'Portfolio',
+      foreignKey: 'userId',
+      otherKey: 'stockId',
+    };
+    const columnMapping2 = {
+      through: 'Transaction',
+      foreignKey: 'userId',
+      otherKey: 'stockId',
+    };
+    User.belongsToMany(models.Stock, columnMapping1);
+    User.belongsToMany(models.Stock, columnMapping2);
+    User.hasMany(models.Watchlist, { foreignKey: 'userId' });
   };
   User.prototype.toSafeObject = function () {
-    const { id, username, email } = this;
-    return { id, username, email };
+    const { id, firstName, username, email } = this;
+    return { id, firstName, username, email };
   };
   User.prototype.validatePassword = function (password) {
     return bcrypt.compareSync(password, this.hashedPassword.toString());
