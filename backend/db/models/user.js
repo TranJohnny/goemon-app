@@ -80,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Watchlist, { foreignKey: 'userId' });
   };
   User.prototype.toSafeObject = function () {
-    const { id, username, email } = this;
+    const { id, firstName, username, email } = this;
     return { id, firstName, username, email };
   };
   User.prototype.validatePassword = function (password) {
