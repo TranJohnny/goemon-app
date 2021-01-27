@@ -6,11 +6,11 @@ import { getOneStock } from '../../store/stock';
 function StockDetailsPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const stock = useSelector((state) => state.stock.stock);
+  const stock = useSelector((state) => state.stock);
 
   useEffect(() => {
     dispatch(getOneStock(id));
-    console.log(stock);
+    console.log('STOCK ', stock);
   }, [dispatch]);
 
   return (
