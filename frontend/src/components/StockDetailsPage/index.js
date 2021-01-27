@@ -16,8 +16,8 @@ function StockDetailsPage() {
   return (
     <>
       <div>Stock Page with id of {id}</div>
-      <div>{stock.name}</div>
-      <div>{stock.ticker}</div>
+      <div>{stock && stock.name}</div>
+      <div>{stock && stock.ticker}</div>
     </>
   );
 }
