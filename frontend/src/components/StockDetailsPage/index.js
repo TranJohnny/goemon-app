@@ -6,7 +6,7 @@ import { getOneStock } from '../../store/stock';
 function StockDetailsPage() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const stock = useSelector((state) => state.stock);
+  const stock = useSelector((state) => state.stock.stock);
 
   useEffect(() => {
     dispatch(getOneStock(id));
@@ -17,7 +17,11 @@ function StockDetailsPage() {
     <>
       <div>Stock Page with id of {id}</div>
       <div>{stock && stock.name}</div>
-      <div>{stock && stock.ticker}</div>
+      <div>{stock && stock.symbol}</div>
+      <div>{stock && stock.change}</div>
+      <div>{stock && stock.changePercent}</div>
+      <div>{stock && stock.price}</div>
+      <div>{stock && stock.marketCap}</div>
     </>
   );
 }

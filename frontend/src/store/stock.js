@@ -24,7 +24,16 @@ export const getOneStock = (id) => async (dispatch) => {
     if (res.ok) {
       const newStock = await res.json();
       console.log('NEWSTOCK: ', newStock);
-      dispatch(addOneStock(newStock));
+      const obj = {
+        symbol: newStock.symbol,
+        name: newStock.companyName,
+        latestPrice: newStock.latestPrice,
+        price: newStock.iexRealtimePrice,
+        change: newStock.change,
+        changePercent: newStock.changePercent,
+        marketCap: newStock.marketCap,
+      };
+      dispatch(addOneStock(obj));
     }
   }
 };
