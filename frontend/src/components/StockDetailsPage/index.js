@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneStock } from '../../store/stock';
+import LineGraph from '../LineGraph';
 
 function StockDetailsPage() {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function StockDetailsPage() {
       <div>{stock && stock.changePercent}</div>
       <div>{stock && stock.price}</div>
       <div>{stock && stock.marketCap}</div>
+      <LineGraph />
     </>
   );
 }
