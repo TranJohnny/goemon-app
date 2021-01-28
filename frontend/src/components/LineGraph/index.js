@@ -8,6 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import CustomTooltip from './customToolTip';
 import { useState } from 'react';
 import Odometer from 'react-odometerjs';
 
@@ -29,13 +30,14 @@ const getRandomData = (numPoints) => {
 };
 const data = getRandomData(30);
 
-function LineGraph() {
+function LineGraph({ stock }) {
   const [price, setPrice] = useState(data[data.length - 1].value);
 
-  function handleHover(e) {
-    if (e.activePayload) {
-      console.log(e.activePayload[0].payload.value);
+  async function handleHover(e) {
+    if (e.activePayload && e.activePayload[0].payload.value !== price) {
+      // console.log(e.activePayload[0].payload.value);
       setPrice(e.activePayload[0].payload.value);
+      await setTimeout(() => {}, 250);
     }
   }
 
@@ -43,10 +45,17 @@ function LineGraph() {
     setPrice(data[data.length - 1].value);
   }
   return (
-    <>
-      <div style={{ fontSize: '50px' }}>
+    <div>
+      <div style={{ fontSize: '40px' }}>{stock.name}</div>
+      <div style={{ fontSize: '40px' }}>
         <Odometer value={price} format="(,ddd).dd" />
       </div>
+      {stock.changePercent && (
+        <div>
+          ${stock.change.toFixed(2)} ({(stock.changePercent * 100).toFixed(2)}%){' '}
+          <span style={{ color: '#B0B0B0' }}>Past Week</span>
+        </div>
+      )}
       <ResponsiveContainer width="40%" height={400}>
         <LineChart
           data={data}
@@ -58,10 +67,15 @@ function LineGraph() {
           {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
           {/* <XAxis dataKey="name" /> */}
           {/* <YAxis /> */}
-          <Tooltip />
+          <Tooltip
+            content={<CustomTooltip />}
+            isAnimationActive={false}
+            offset={2}
+            position={{ y: 20 }}
+          />
         </LineChart>
       </ResponsiveContainer>
-    </>
+    </div>
   );
 }
 

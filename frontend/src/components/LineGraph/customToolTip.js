@@ -10,13 +10,13 @@ import {
   ReferenceLine,
 } from 'recharts';
 
-function CustomTooltip() {
-  const { active, range } = this.props;
+function CustomTooltip(props) {
+  const { active, range } = props;
   if (active) {
-    const { payload, label } = this.props;
+    const { payload, label } = props;
     return (
-      <div className="custom-tooltip">
-        <p className="label">{`${label}`}</p>
+      <div>
+        <p>{`${label}`}</p>
       </div>
     );
   }
