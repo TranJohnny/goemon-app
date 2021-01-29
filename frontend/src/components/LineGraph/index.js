@@ -39,11 +39,11 @@ function LineGraph({ stock }) {
 
   useEffect(() => {
     const array = getRandomData(timeline * 6, stock.price);
-    console.log(array);
+    console.log(stock.name, 'before', array);
     if (stock.price) {
-      array[array.length - 1] = stock.price;
+      array[array.length - 1].value = stock.price;
     }
-    console.log(array);
+    console.log(stock.name, 'after', array);
     setData(array);
     setPrice(array[array.length - 1].value);
   }, []);
@@ -84,7 +84,7 @@ function LineGraph({ stock }) {
           onMouseLeave={handleLeave}
         >
           <Line type="monotone" dataKey="value" stroke="#0275d8" dot={false} />
-          <YAxis hide={true} />
+          <YAxis hide={true} type="number" domain={['dataMin', 'dataMax']} />
           <XAxis hide={true} tickLine={false} dataKey="label" />
           {stock.price && (
             <ReferenceLine y={stock.price} label="" stroke="#0275d8" strokeDasharray="2 2" />
