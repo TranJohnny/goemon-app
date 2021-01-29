@@ -68,10 +68,14 @@ export const signup = (user) => async (dispatch) => {
 export const loadUserData = (user) => async (dispatch) => {
   console.log('LOADING USER DATA...');
   const id = user.id;
-  const res = await fetch(`/api/users/${id}`);
+  const res = await fetch(`/api/users/${id}`, {
+    headers: {
+      accepts: 'application/json',
+    },
+  });
   if (res.ok) {
-    const response = await res.json();
-    const data = { TWTR: 10, data: response };
+    // console.log('FETCH USER', res.data.Watchlists);
+    const data = { TWTR: 10, data: res.data.Watchlists };
     dispatch(addUserData(data));
   }
 };

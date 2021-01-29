@@ -50,20 +50,20 @@ router.post(
   })
 );
 
+// /api/users/:id
 router.get(
-  '/users/:id',
+  '/:id',
   asyncHandler(async function (req, res) {
     const user = await db.User.findByPk(req.params.id, {
       include: [
         {
-          model: db.Stock,
-        },
-        {
           model: db.Watchlist,
+          include: db.Stock,
         },
       ],
     });
-    return res.json(stock);
+
+    return res.json(user);
   })
 );
 
