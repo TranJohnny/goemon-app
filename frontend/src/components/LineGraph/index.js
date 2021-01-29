@@ -31,15 +31,12 @@ const getRandomData = (numPoints, price) => {
   return dataPoints;
 };
 
-// const mockData = getRandomData(42);
-
 function LineGraph({ stock }) {
   const [timeline, setTimeline] = useState(7);
   const [data, setData] = useState([]);
   const [sourceData, setSourceData] = useState([]);
   const [price, setPrice] = useState(stock.price);
   const [range, setRange] = useState({ min: 0, max: stock.price });
-  // const [price, setPrice] = useState(data ? data[data.length - 1].value : 0);
 
   useEffect(() => {
     if (timeline * 6 > sourceData.length) {
@@ -62,7 +59,6 @@ function LineGraph({ stock }) {
 
   async function handleHover(e) {
     if (e.activePayload && e.activePayload[0].payload.value !== price) {
-      // console.log(e.activePayload[0].payload.value);
       setPrice(e.activePayload[0].payload.value);
       await setTimeout(() => {}, 250);
     }
@@ -75,6 +71,7 @@ function LineGraph({ stock }) {
       setPrice(data[data.length - 1].value);
     }
   }
+
   function handleClick(num) {
     if (num < timeline) {
       const current = sourceData.slice(timeline - num);

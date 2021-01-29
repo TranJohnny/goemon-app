@@ -5,6 +5,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const db = require('../../db/models');
 
 const router = express.Router();
 
@@ -46,6 +47,23 @@ router.post(
     return res.json({
       user,
     });
+  })
+);
+
+router.get(
+  '/users/:id',
+  asyncHandler(async function (req, res) {
+    const user = await db.User.findByPk(req.params.id, {
+      include: [
+        {
+          model: db.Stock,
+        },
+        {
+          model: db.Watchlist,
+        },
+      ],
+    });
+    return res.json(stock);
   })
 );
 
