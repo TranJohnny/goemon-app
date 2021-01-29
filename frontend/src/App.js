@@ -5,6 +5,7 @@ import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import Navigation from './components/Navigation';
 import StockDetailsPage from './components/StockDetailsPage';
+import DashboardPage from './components/DashboardPage';
 import * as sessionActions from './store/session';
 import SplashPage from './components/SplashPage';
 
@@ -17,9 +18,9 @@ function App() {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log('Hello, ', sessionUser);
-  }, [sessionUser]);
+  // useEffect(() => {
+  //   console.log('Hello, ', sessionUser);
+  // }, [sessionUser]);
 
   return (
     <>
@@ -30,7 +31,7 @@ function App() {
             <SplashPage />
           </Route>
           <Route exact path="/dashboard">
-            <h1>Dashboard</h1>
+            <DashboardPage />
           </Route>
           <Route path="/login">
             <LoginFormPage />
