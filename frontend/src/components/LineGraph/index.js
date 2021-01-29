@@ -14,11 +14,10 @@ import Odometer from 'react-odometerjs';
 
 const getRandomData = (numPoints, price) => {
   const dataPoints = [];
-  let num = price || Math.floor(Math.random() * 1000);
+  let num = price;
   for (let i = 0; i < numPoints; i++) {
-    const change = [-1, 1];
-    let percent =
-      1 + (Math.floor(Math.random() * 16) / 100) * change[Math.floor(Math.random() * 2)];
+    const change = [-1.1, -0.8, -0.4, 0.4, 0.8, 1.2];
+    let percent = 1 + (Math.floor(Math.random() * 3) / 100) * change[Math.floor(Math.random() * 6)];
     num = (num * percent).toFixed(2);
     let obj = {
       name: 'x',
@@ -26,27 +25,40 @@ const getRandomData = (numPoints, price) => {
     };
     dataPoints.push(obj);
   }
+  if (price) {
+    dataPoints[dataPoints.length - 1].value = price;
+  }
   return dataPoints;
 };
 
-const mockData = getRandomData(42);
+// const mockData = getRandomData(42);
 
 function LineGraph({ stock }) {
   const [timeline, setTimeline] = useState(7);
-  const [data, setData] = useState(mockData);
+  const [data, setData] = useState([]);
+  const [sourceData, setSourceData] = useState([]);
   const [price, setPrice] = useState(stock.price);
+  const [range, setRange] = useState({ min: 0, max: stock.price });
   // const [price, setPrice] = useState(data ? data[data.length - 1].value : 0);
 
   useEffect(() => {
-    const array = getRandomData(timeline * 6, stock.price);
-    console.log(stock.name, 'before', array);
-    if (stock.price) {
-      array[array.length - 1].value = stock.price;
+    if (timeline * 6 > sourceData.length) {
+      const remainingTimeline = timeline * 6 - sourceData.length;
+      const dataToAdd = getRandomData(remainingTimeline, stock.price);
+      const newData = [...dataToAdd, ...sourceData];
+      const min = Math.min(...Object.values(newData).map((point) => point.value));
+      const max = Math.max(...Object.values(newData).map((point) => point.value));
+      setRange({ min, max });
+      setSourceData(newData);
+      setData(newData);
+    } else {
+      const dataToDisplay = sourceData.slice(sourceData.length - timeline * 6);
+      const min = Math.min(...Object.values(dataToDisplay).map((point) => point.value));
+      const max = Math.max(...Object.values(dataToDisplay).map((point) => point.value));
+      setRange({ min, max });
+      setData(dataToDisplay);
     }
-    console.log(stock.name, 'after', array);
-    setData(array);
-    setPrice(array[array.length - 1].value);
-  }, []);
+  }, [timeline]);
 
   async function handleHover(e) {
     if (e.activePayload && e.activePayload[0].payload.value !== price) {
@@ -63,12 +75,19 @@ function LineGraph({ stock }) {
       setPrice(data[data.length - 1].value);
     }
   }
+  function handleClick(num) {
+    if (num < timeline) {
+      const current = sourceData.slice(timeline - num);
+      setData(current);
+    }
+    setTimeline(num);
+  }
 
   return (
     <div>
       <div style={{ fontSize: '40px' }}>{stock.name}</div>
       <div style={{ fontSize: '40px' }}>
-        <Odometer value={price} format="(,ddd).dd" />
+        <Odometer value={price} format="(,ddd).dd" duration="500" />
       </div>
       {stock.changePercent && (
         <div>
@@ -84,7 +103,7 @@ function LineGraph({ stock }) {
           onMouseLeave={handleLeave}
         >
           <Line type="monotone" dataKey="value" stroke="#0275d8" dot={false} />
-          <YAxis hide={true} type="number" domain={['dataMin', 'dataMax']} />
+          <YAxis hide={true} type="number" domain={[range.min, range.max]} />
           <XAxis hide={true} tickLine={false} dataKey="label" />
           {stock.price && (
             <ReferenceLine y={stock.price} label="" stroke="#0275d8" strokeDasharray="2 2" />
@@ -97,20 +116,21 @@ function LineGraph({ stock }) {
           />
         </LineChart>
       </ResponsiveContainer>
+      <div></div>
       <div className="d-flex justify-content-left justify-content-around">
-        <button className="astext">
+        <button className="astext" onClick={() => handleClick(1)}>
           <span> 1D </span>
         </button>
-        <button className="astext">
+        <button className="astext" onClick={() => handleClick(7)}>
           <span> 1W </span>
         </button>
-        <button className="astext">
+        <button className="astext" onClick={() => handleClick(30)}>
           <span> 1M </span>
         </button>
-        <button className="astext">
+        <button className="astext" onClick={() => handleClick(90)}>
           <span> 3M </span>
         </button>
-        <button className="astext">
+        <button className="astext" onClick={() => handleClick(365)}>
           <span> 1Y </span>
         </button>
       </div>
