@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOneStock } from '../../store/stock';
 import LineGraph from '../LineGraph';
 import { Spinner } from 'react-bootstrap';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 
 function StockDetailsPage() {
   const dispatch = useDispatch();
@@ -11,23 +14,28 @@ function StockDetailsPage() {
   const stock = useSelector((state) => state.stock.stock);
 
   useEffect(() => {
-    console.log('useEffect ran');
+    console.log('Geting new stock...');
     dispatch(getOneStock(id));
     console.log('STOCK ', stock);
   }, [id]);
 
   if (stock) {
     return (
-      <>
-        <div>Stock Page with id of {id}</div>
-        <div>{stock && stock.name}</div>
-        <div>{stock && stock.symbol}</div>
-        <div>{stock && stock.change}</div>
-        <div>{stock && stock.changePercent}</div>
-        <div>{stock && stock.price}</div>
-        <div>{stock && stock.marketCap}</div>
-        <LineGraph stock={stock} />
-      </>
+      <Container>
+        <Row>
+          <Col xs={9}>
+            <div>Stock Page with id of {id}</div>
+            <div>{stock && stock.name}</div>
+            <div>{stock && stock.symbol}</div>
+            <div>{stock && stock.change}</div>
+            <div>{stock && stock.changePercent}</div>
+            <div>{stock && stock.price}</div>
+            <div>{stock && stock.marketCap}</div>
+            <LineGraph stock={stock} />
+          </Col>
+          <Col>Sidebar</Col>
+        </Row>
+      </Container>
     );
   }
   return (

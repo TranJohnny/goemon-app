@@ -2,24 +2,24 @@ import './LineGraph.css';
 import {
   LineChart,
   Line,
-  CartesianGrid,
+  ReferenceLine,
   XAxis,
   YAxis,
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
 import CustomTooltip from './customToolTip';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Odometer from 'react-odometerjs';
 
-const getRandomData = (numPoints) => {
+const getRandomData = (numPoints, price) => {
   const dataPoints = [];
-  let num = Math.floor(Math.random() * 1000);
+  let num = price || Math.floor(Math.random() * 1000);
   for (let i = 0; i < numPoints; i++) {
     const change = [-1, 1];
     let percent =
-      1 + (Math.floor(Math.random() * 26) / 100) * change[Math.floor(Math.random() * 2)];
-    num *= percent;
+      1 + (Math.floor(Math.random() * 16) / 100) * change[Math.floor(Math.random() * 2)];
+    num = (num * percent).toFixed(2);
     let obj = {
       name: 'x',
       value: num,
@@ -28,10 +28,25 @@ const getRandomData = (numPoints) => {
   }
   return dataPoints;
 };
-const data = getRandomData(30);
+
+const mockData = getRandomData(42);
 
 function LineGraph({ stock }) {
-  const [price, setPrice] = useState(data[data.length - 1].value);
+  const [timeline, setTimeline] = useState(7);
+  const [data, setData] = useState(mockData);
+  const [price, setPrice] = useState(stock.price);
+  // const [price, setPrice] = useState(data ? data[data.length - 1].value : 0);
+
+  useEffect(() => {
+    const array = getRandomData(timeline * 6, stock.price);
+    console.log(array);
+    if (stock.price) {
+      array[array.length - 1] = stock.price;
+    }
+    console.log(array);
+    setData(array);
+    setPrice(array[array.length - 1].value);
+  }, []);
 
   async function handleHover(e) {
     if (e.activePayload && e.activePayload[0].payload.value !== price) {
@@ -42,8 +57,13 @@ function LineGraph({ stock }) {
   }
 
   function handleLeave(e) {
-    setPrice(data[data.length - 1].value);
+    if (stock.price) {
+      setPrice(stock.price);
+    } else {
+      setPrice(data[data.length - 1].value);
+    }
   }
+
   return (
     <div>
       <div style={{ fontSize: '40px' }}>{stock.name}</div>
@@ -56,7 +76,7 @@ function LineGraph({ stock }) {
           <span style={{ color: '#B0B0B0' }}>Past Week</span>
         </div>
       )}
-      <ResponsiveContainer width="40%" height={400}>
+      <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={data}
           margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
@@ -64,9 +84,11 @@ function LineGraph({ stock }) {
           onMouseLeave={handleLeave}
         >
           <Line type="monotone" dataKey="value" stroke="#0275d8" dot={false} />
-          {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
-          {/* <XAxis dataKey="name" /> */}
-          {/* <YAxis /> */}
+          <YAxis hide={true} />
+          <XAxis hide={true} tickLine={false} dataKey="label" />
+          {stock.price && (
+            <ReferenceLine y={stock.price} label="" stroke="#0275d8" strokeDasharray="2 2" />
+          )}
           <Tooltip
             content={<CustomTooltip />}
             isAnimationActive={false}
@@ -75,6 +97,23 @@ function LineGraph({ stock }) {
           />
         </LineChart>
       </ResponsiveContainer>
+      <div className="d-flex justify-content-left justify-content-around">
+        <button className="astext">
+          <span> 1D </span>
+        </button>
+        <button className="astext">
+          <span> 1W </span>
+        </button>
+        <button className="astext">
+          <span> 1M </span>
+        </button>
+        <button className="astext">
+          <span> 3M </span>
+        </button>
+        <button className="astext">
+          <span> 1Y </span>
+        </button>
+      </div>
     </div>
   );
 }

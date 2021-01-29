@@ -1,4 +1,4 @@
-const publicKey = 'Tpk_718a8ee4e1de42f5b378907bcc07cec8';
+// const publicKey = 'Tpk_718a8ee4e1de42f5b378907bcc07cec8';
 const sandboxKey = 'Tpk_5b639af76f6f4ccab053715f4456f509';
 
 const ADD_ONE = 'stock/ADD_ONE';
@@ -23,7 +23,7 @@ export const getOneStock = (id) => async (dispatch) => {
     );
     if (res.ok) {
       const newStock = await res.json();
-      console.log('NEWSTOCK: ', newStock);
+      // console.log('NEWSTOCK: ', newStock);
       const obj = {
         symbol: newStock.symbol,
         name: newStock.companyName,
@@ -39,6 +39,7 @@ export const getOneStock = (id) => async (dispatch) => {
 };
 
 const stockReducer = (state = {}, action) => {
+  // let newState;
   switch (action.type) {
     case ADD_ONE: {
       return { stock: action.stock };
