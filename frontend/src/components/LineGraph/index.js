@@ -60,7 +60,7 @@ function LineGraph({ stock }) {
   async function handleHover(e) {
     if (e.activePayload && e.activePayload[0].payload.value !== price) {
       setPrice(e.activePayload[0].payload.value);
-      await setTimeout(() => {}, 250);
+      // await setTimeout(() => {}, 250);
     }
   }
 
@@ -99,7 +99,7 @@ function LineGraph({ stock }) {
           onMouseMove={handleHover}
           onMouseLeave={handleLeave}
         >
-          <Line type="monotone" dataKey="value" stroke="#0275d8" dot={false} />
+          <Line type="monotone" dataKey="value" stroke="#0275d8" dot={false} strokeWidth={1.5} />
           <YAxis hide={true} type="number" domain={[range.min, range.max]} />
           <XAxis hide={true} tickLine={false} dataKey="label" />
           {stock.price && (

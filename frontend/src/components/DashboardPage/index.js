@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Example from '../Sidebar';
 import { Spinner } from 'react-bootstrap';
 
 import LineGraph from '../LineGraph';
@@ -14,7 +15,7 @@ function DashboardPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
-  const stock = { name: null, price: 500 };
+  const stock = { name: null, price: 7842.42 };
 
   useEffect(() => {
     if (sessionUser) {
@@ -31,7 +32,7 @@ function DashboardPage() {
     return (
       <Container>
         <Row>
-          <Col xs={9}>
+          <Col md={8}>
             {/* <div>Stock Page with id of {id}</div> */}
             <div>{stock && stock.name}</div>
             <div>{stock && stock.symbol}</div>
@@ -41,7 +42,9 @@ function DashboardPage() {
             <div>{stock && stock.marketCap}</div>
             <LineGraph stock={stock} />
           </Col>
-          <Col>Sidebar</Col>
+          <Col>
+            <Example />
+          </Col>
         </Row>
       </Container>
     );
