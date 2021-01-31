@@ -31,10 +31,10 @@ function CustomToggle({ children, eventKey, callback }) {
   );
 }
 export default function Example() {
-  const watchlists = useSelector((state) => state.session.userStocks.data);
-  // const watchlists = Object.values(watchlist);
+  const session = useSelector((state) => state.session);
+  const watchlists = session.userStocks.data;
   useEffect(() => {
-    console.log('WATCHLISTS', watchlists);
+    console.log('WATCHLISTS', watchlists[0].id);
   }, []);
 
   return (
@@ -42,27 +42,28 @@ export default function Example() {
       <Accordion border="none">
         <Card>
           <Card.Header>
-            <CustomToggle eventKey="0">My Stocks</CustomToggle>
+            <CustomToggle eventKey="a">My Stocks</CustomToggle>
           </Card.Header>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>body 1</Card.Body>
+          <Accordion.Collapse eventKey="a">
+            <Card.Body>Stock Transactions Coming Soon</Card.Body>
           </Accordion.Collapse>
         </Card>
         <Card>
-          <Card.Header>
-            <CustomToggle eventKey="1">Lists</CustomToggle>
-          </Card.Header>
-          {watchlists.map((watchlist) => {
+          <Card.Header>Lists</Card.Header>
+        </Card>
+        {watchlists &&
+          watchlists.map((watchlist) => {
             return (
-              <Accordion.Collapse eventKey="1">
-                <Card.Body>{watchlist.name}</Card.Body>
-              </Accordion.Collapse>
+              <Card>
+                <Card.Header>
+                  <CustomToggle eventKey={watchlist.id}>{watchlist.name}</CustomToggle>
+                </Card.Header>
+                <Accordion.Collapse eventKey={watchlist.id}>
+                  <Card.Body>Stuff</Card.Body>
+                </Accordion.Collapse>
+              </Card>
             );
           })}
-          {/* <Accordion.Collapse eventKey="1">
-            <Card.Body>body 2</Card.Body>
-          </Accordion.Collapse> */}
-        </Card>
       </Accordion>
     </>
   );
