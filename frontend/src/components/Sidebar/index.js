@@ -3,13 +3,15 @@ import AccordionContext from 'react-bootstrap/AccordionContext';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 function CustomToggle({ children, eventKey, callback }) {
   const currentEventKey = useContext(AccordionContext);
   const decoratedOnClick = useAccordionToggle(eventKey, () => callback && callback(eventKey));
   const isCurrentEventKey = currentEventKey === eventKey;
+
   return (
     // <button
     //   type="button"
@@ -29,6 +31,12 @@ function CustomToggle({ children, eventKey, callback }) {
   );
 }
 export default function Example() {
+  const watchlists = useSelector((state) => state.session.userStocks.data);
+  // const watchlists = Object.values(watchlist);
+  useEffect(() => {
+    console.log('WATCHLISTS', watchlists);
+  }, []);
+
   return (
     <>
       <Accordion border="none">
@@ -44,9 +52,16 @@ export default function Example() {
           <Card.Header>
             <CustomToggle eventKey="1">Lists</CustomToggle>
           </Card.Header>
-          <Accordion.Collapse eventKey="1">
+          {watchlists.map((watchlist) => {
+            return (
+              <Accordion.Collapse eventKey="1">
+                <Card.Body>{watchlist.name}</Card.Body>
+              </Accordion.Collapse>
+            );
+          })}
+          {/* <Accordion.Collapse eventKey="1">
             <Card.Body>body 2</Card.Body>
-          </Accordion.Collapse>
+          </Accordion.Collapse> */}
         </Card>
       </Accordion>
     </>
