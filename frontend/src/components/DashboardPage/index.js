@@ -15,7 +15,7 @@ function DashboardPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
 
-  const stock = { name: null, price: 7842.42 };
+  const stock = { name: null, price: 7842.42, change: 51.42, changePercent: 0.0112 };
 
   useEffect(() => {
     if (sessionUser) {
@@ -31,15 +31,8 @@ function DashboardPage() {
   if (stock) {
     return (
       <Container>
-        <Row>
+        <Row className="mt-5">
           <Col md={8}>
-            {/* <div>Stock Page with id of {id}</div> */}
-            <div>{stock && stock.name}</div>
-            <div>{stock && stock.symbol}</div>
-            <div>{stock && stock.change}</div>
-            <div>{stock && stock.changePercent}</div>
-            <div>{stock && stock.price}</div>
-            <div>{stock && stock.marketCap}</div>
             <LineGraph stock={stock} />
           </Col>
           <Col>

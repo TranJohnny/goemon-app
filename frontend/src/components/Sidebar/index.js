@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import StockRow from '../StockRow';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 function CustomToggle({ children, eventKey, callback }) {
@@ -32,9 +33,14 @@ function CustomToggle({ children, eventKey, callback }) {
 }
 export default function Example() {
   const session = useSelector((state) => state.session);
-  const watchlists = session.userStocks.data;
+  let watchlists;
+  if (session.userStocks) {
+    watchlists = session.userStocks.data;
+  } else {
+    watchlists = [{ id: 1, name: 'Failed To Load' }];
+  }
   useEffect(() => {
-    console.log('WATCHLISTS', watchlists[0].id);
+    console.log('WATCHLISTS', watchlists[0]);
   }, []);
 
   return (
@@ -53,14 +59,26 @@ export default function Example() {
         </Card>
         {watchlists &&
           watchlists.map((watchlist) => {
+            let stocks;
+            if (watchlist.Stocks) {
+              stocks = watchlist.Stocks;
+            } else {
+              stocks = [{ ticker: '???' }];
+            }
             return (
               <Card>
                 <Card.Header>
                   <CustomToggle eventKey={watchlist.id}>{watchlist.name}</CustomToggle>
                 </Card.Header>
-                <Accordion.Collapse eventKey={watchlist.id}>
-                  <Card.Body>Stuff</Card.Body>
-                </Accordion.Collapse>
+                {stocks.map((stock) => {
+                  return (
+                    <Accordion.Collapse eventKey={watchlist.id}>
+                      <Card.Body>
+                        <StockRow stock={stock} />
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  );
+                })}
               </Card>
             );
           })}
