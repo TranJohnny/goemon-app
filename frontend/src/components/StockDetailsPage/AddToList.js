@@ -9,8 +9,6 @@ function AddToList({ isWatched, stockId }) {
 
   const sessionUser = useSelector((state) => state.session);
   const watchlistId = sessionUser.userStocks.data[0].id;
-  console.log('watchlistId', watchlistId);
-  // const watchlistId = sessionUser.userStocks.data.id;
 
   function handleAdd() {
     dispatch(sessionActions.addToWatchlist(sessionUser, watchlistId, stockId));

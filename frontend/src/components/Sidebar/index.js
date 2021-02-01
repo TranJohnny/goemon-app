@@ -40,9 +40,9 @@ export default function Example() {
   } else {
     watchlists = [{ id: 0, name: 'Failed To Load' }];
   }
-  useEffect(() => {
-    console.log('WATCHLISTS', watchlists[0]);
-  }, []);
+  // useEffect(() => {
+  //   console.log('WATCHLISTS', watchlists[0]);
+  // }, []);
 
   return (
     <>

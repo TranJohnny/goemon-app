@@ -26,18 +26,18 @@ function Navigation({ isLoaded }) {
     dispatch(sessionActions.logout());
   };
 
-  const autoSearch = (e) => {
-    e.preventDefault();
-    console.log(searchInput);
-  };
+  // const autoSearch = (e) => {
+  //   e.preventDefault();
+  //   console.log(searchInput);
+  // };
 
-  useEffect(() => {
-    console.log(searchInput);
-  }, []);
+  // useEffect(() => {
+  //   console.log(searchInput);
+  // }, []);
 
-  useEffect(() => {
-    console.log(searchInput);
-  }, [searchInput]);
+  // useEffect(() => {
+  //   console.log(searchInput);
+  // }, [searchInput]);
 
   let sessionLinks;
   let searchBar;
@@ -73,7 +73,7 @@ function Navigation({ isLoaded }) {
       </>
     );
     searchBar = (
-      <Form inline style={{ width: '100%' }} onSubmit={autoSearch}>
+      <Form inline style={{ width: '100%' }}>
         <FormControl
           type="text"
           placeholder="Search Stocks"

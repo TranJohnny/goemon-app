@@ -68,7 +68,7 @@ export const signup = (user) => async (dispatch) => {
 };
 
 export const loadUserData = (user) => async (dispatch) => {
-  console.log('LOADING USER DATA...');
+  // console.log('LOADING USER DATA...');
   const id = user.id;
   const res = await fetch(`/api/users/${id}`, {
     headers: {

@@ -35,9 +35,9 @@ function StockDetailsPage() {
   }, []);
 
   useEffect(() => {
-    console.log('Geting new stock...');
+    // console.log('Geting new stock...');
     dispatch(getOneStock(id));
-    console.log('STOCK ', stock);
+    // console.log('STOCK ', stock);
   }, [id]);
 
   if (stock) {

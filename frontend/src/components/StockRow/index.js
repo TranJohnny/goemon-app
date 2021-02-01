@@ -10,12 +10,8 @@ function StockRow({ stock }) {
   const rand = Math.floor(Math.random() * 2);
   const miniChart = charts[rand];
 
-  const handleClick = () => {
-    console.log(stock.id);
-  };
-
   return (
-    <div className="stock-row" onClick={handleClick}>
+    <div className="stock-row">
       <div className="stock-row__intro">
         <h1>{stock.ticker}</h1>
         <p>{volume + ' shares'}</p>

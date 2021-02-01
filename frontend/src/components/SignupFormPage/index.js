@@ -29,7 +29,6 @@ function SignupFormPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(firstName, lastName, username);
     if (password === confirmPassword) {
       setErrors([]);
       setPassword('');
