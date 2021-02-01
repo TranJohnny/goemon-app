@@ -29,6 +29,12 @@ function LoginFormPage() {
     });
   };
 
+  function demoLogin() {
+    // setCredential('demo@user.io');
+    // setPassword('password');
+    return dispatch(sessionActions.login({ credential: 'demo@user.io', password: 'password' }));
+  }
+
   return (
     <Container style={{ maxWidth: '100%', margin: '0', padding: '0' }}>
       <Row style={{ flexWrap: 'none' }}>
@@ -74,9 +80,19 @@ function LoginFormPage() {
                   required
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" size="lg">
-                Log In
-              </Button>
+              <Row className="d-flex justify-content-between">
+                <Col sm={4}>
+                  <Button variant="primary" type="submit" size="md">
+                    Log In
+                  </Button>
+                </Col>
+                <Col sm={5}>
+                  <Button as="p" className="mt-2" size="sm" onClick={demoLogin}>
+                    {' '}
+                    Demo Login
+                  </Button>
+                </Col>
+              </Row>
             </Form>
           </div>
         </Col>
