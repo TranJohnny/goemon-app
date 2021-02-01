@@ -5,12 +5,15 @@ import stock2 from '../stock2.svg';
 function StockRow({ stock }) {
   const percentage = Math.random() * 10;
   const volume = '500';
-  const price = '$200';
+  const price = `$${(Math.random() * 260).toFixed(2)}`;
   const charts = [stock1, stock2];
   const rand = Math.floor(Math.random() * 2);
   const miniChart = charts[rand];
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    console.log(stock.id);
+  };
+
   return (
     <div className="stock-row" onClick={handleClick}>
       <div className="stock-row__intro">

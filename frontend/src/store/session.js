@@ -80,6 +80,20 @@ export const loadUserData = (user) => async (dispatch) => {
   }
 };
 
+export const addToWatchlist = (user, watchlistId, stockId) => async (dispatch) => {
+  const res = await fetch(`/api/users/watchlists`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ watchlistId, stockId }),
+  });
+  if (!res.ok) {
+    throw res;
+  }
+  loadUserData(user);
+};
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {

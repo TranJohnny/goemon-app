@@ -6,6 +6,7 @@ import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import { useContext, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import StockRow from '../StockRow';
+import { NavLink } from 'react-router-dom';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 function CustomToggle({ children, eventKey, callback }) {
@@ -24,7 +25,7 @@ function CustomToggle({ children, eventKey, callback }) {
       as={Button}
       variant="link"
       eventKey="0"
-      style={{ backgroundColor: isCurrentEventKey ? 'lightblue' : 'white' }}
+      style={{ fontWeight: isCurrentEventKey ? 'bold' : 'normal' }}
       onClick={decoratedOnClick}
     >
       {children}
@@ -37,7 +38,7 @@ export default function Example() {
   if (session.userStocks) {
     watchlists = session.userStocks.data;
   } else {
-    watchlists = [{ id: 1, name: 'Failed To Load' }];
+    watchlists = [{ id: 0, name: 'Failed To Load' }];
   }
   useEffect(() => {
     console.log('WATCHLISTS', watchlists[0]);
@@ -45,7 +46,7 @@ export default function Example() {
 
   return (
     <>
-      <Accordion border="none">
+      <Accordion>
         <Card>
           <Card.Header>
             <CustomToggle eventKey="a">My Stocks</CustomToggle>
@@ -63,22 +64,24 @@ export default function Example() {
             if (watchlist.Stocks) {
               stocks = watchlist.Stocks;
             } else {
-              stocks = [{ ticker: '???' }];
+              stocks = [{ ticker: '???', id: 0 }];
             }
             return (
               <Card>
                 <Card.Header>
                   <CustomToggle eventKey={watchlist.id}>{watchlist.name}</CustomToggle>
                 </Card.Header>
-                {stocks.map((stock) => {
-                  return (
-                    <Accordion.Collapse eventKey={watchlist.id}>
-                      <Card.Body>
-                        <StockRow stock={stock} />
-                      </Card.Body>
-                    </Accordion.Collapse>
-                  );
-                })}
+                <div style={{ maxHeight: '600px', overflow: 'overlay' }}>
+                  {stocks.map((stock) => {
+                    return (
+                      <Accordion.Collapse eventKey={watchlist.id}>
+                        <Card.Body as={NavLink} to={`/stocks/${stock.id}`}>
+                          <StockRow stock={stock} />
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    );
+                  })}
+                </div>
               </Card>
             );
           })}

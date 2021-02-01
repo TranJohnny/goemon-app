@@ -67,4 +67,21 @@ router.get(
   })
 );
 
+router.post(
+  '/watchlists',
+  asyncHandler(async function (req, res) {
+    const { watchlistId, stockId } = req.body;
+    const recordCreated = await db.Watchlist_Portfolio.create({
+      watchlistId,
+      stockId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    if (recordCreated) {
+      const stock = await db.Stock.findByPk(stockId);
+      res.json({ stock });
+    }
+  })
+);
+
 module.exports = router;
