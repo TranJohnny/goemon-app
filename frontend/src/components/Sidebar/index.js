@@ -71,7 +71,7 @@ export default function Example() {
                 <Card.Header>
                   <CustomToggle eventKey={watchlist.id}>{watchlist.name}</CustomToggle>
                 </Card.Header>
-                <div style={{ maxHeight: '600px', overflow: 'overlay' }}>
+                <div style={{ maxHeight: '662px', overflow: 'overlay' }}>
                   {stocks.map((stock) => {
                     return (
                       <Accordion.Collapse eventKey={watchlist.id}>

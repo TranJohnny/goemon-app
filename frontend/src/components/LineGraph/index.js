@@ -106,21 +106,22 @@ function LineGraph({ stock }) {
             <ReferenceLine y={stock.price} label="" stroke="#0275d8" strokeDasharray="2 2" />
           )}
           <Tooltip
-            content={<CustomTooltip />}
+            content={<CustomTooltip props={''} />}
             isAnimationActive={false}
             offset={2}
             position={{ y: 20 }}
           />
         </LineChart>
       </ResponsiveContainer>
-      <div></div>
-      <div className="d-flex justify-content-left justify-content-around">
+      <div className="d-flex justify-content-left justify-content-between border-bottom">
         <button className="astext" onClick={() => handleClick(1)}>
           <span> 1D </span>
         </button>
+
         <button className="astext" onClick={() => handleClick(7)}>
           <span> 1W </span>
         </button>
+
         <button className="astext" onClick={() => handleClick(30)}>
           <span> 1M </span>
         </button>
@@ -130,6 +131,10 @@ function LineGraph({ stock }) {
         <button className="astext" onClick={() => handleClick(365)}>
           <span> 1Y </span>
         </button>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </div>
   );

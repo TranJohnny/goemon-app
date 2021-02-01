@@ -30,7 +30,9 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <>
         <Nav.Link href="#home">About Us</Nav.Link>
-        <Nav.Link href="#link">Dashboard</Nav.Link>
+        <Nav.Link as={NavLink} to="/">
+          Dashboard
+        </Nav.Link>
         <NavDropdown title="Account" id="basic-nav-dropdown" alignRight>
           <NavDropdown.ItemText as="div" style={{ margin: 'auto', padding: '5%' }}>
             <Row style={{ width: '100%' }}>
@@ -55,7 +57,7 @@ function Navigation({ isLoaded }) {
       </>
     );
     searchBar = (
-      <Form inline>
+      <Form inline style={{ width: '100%' }}>
         <FormControl type="text" placeholder="Search Stocks" className="mr-sm-2" />
         <Button variant="outline-primary">
           <i class="fas fa-search"></i>
