@@ -23,12 +23,9 @@ function DashboardPage() {
     if (sessionUser) {
       dispatch(sessionActions.loadUserData(sessionUser));
     }
-  }, []);
-
-  useEffect(() => {
-    if (!session.userStocks.data.length) {
-      dispatch(sessionActions.createWatchlist(sessionUser));
-    }
+    // if (!session.userStocks.data.length) {
+    //   dispatch(sessionActions.createWatchlist(sessionUser));
+    // }
   }, []);
 
   if (!sessionUser) {

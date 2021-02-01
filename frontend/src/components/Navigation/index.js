@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
 // import ProfileButton from './ProfileButton';
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import * as sessionActions from '../../store/session';
+import searchStocks from './mockData';
 
 import './Navigation.css';
 import { NavLink } from 'react-router-dom';
@@ -17,11 +18,26 @@ import Col from 'react-bootstrap/Col';
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
+  const [searchInput, setSearchInput] = useState();
+  const [showSearch, setShowSearch] = useState(false);
 
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
   };
+
+  const autoSearch = (e) => {
+    e.preventDefault();
+    console.log(searchInput);
+  };
+
+  useEffect(() => {
+    console.log(searchInput);
+  }, []);
+
+  useEffect(() => {
+    console.log(searchInput);
+  }, [searchInput]);
 
   let sessionLinks;
   let searchBar;
@@ -57,8 +73,14 @@ function Navigation({ isLoaded }) {
       </>
     );
     searchBar = (
-      <Form inline style={{ width: '100%' }}>
-        <FormControl type="text" placeholder="Search Stocks" className="mr-sm-2" />
+      <Form inline style={{ width: '100%' }} onSubmit={autoSearch}>
+        <FormControl
+          type="text"
+          placeholder="Search Stocks"
+          className="mr-sm-2"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+        />
         <Button variant="outline-primary">
           <i class="fas fa-search"></i>
         </Button>

@@ -1,0 +1,40 @@
+.auto {
+  font-weight: bold;
+  position: relative;
+}
+
+.auto > input {
+  padding: 5px 10px 5px 10px;
+  border: 1px solid black;
+}
+
+.auto li {
+  cursor: pointer;
+}
+
+.result-enter {
+  opacity: 0.01;
+}
+
+.result-enter.result-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.result-exit {
+  opacity: 1;
+}
+
+.result-exit.result-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
+.auto-dropdown {
+  position: absolute;
+  background-color: white;
+  left: 10px;
+  top: 35px;
+  padding: 10px;
+  border: 1px solid black;
+}

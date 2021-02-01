@@ -10,7 +10,7 @@ import * as sessionActions from './store/session';
 import SplashPage from './components/SplashPage';
 
 function App() {
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 

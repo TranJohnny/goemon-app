@@ -82,7 +82,7 @@ function LoginFormPage() {
               </Form.Group>
               <Row className="d-flex justify-content-between">
                 <Col sm={4}>
-                  <Button variant="primary" type="submit" size="md">
+                  <Button variant="primary" type="submit" size="md" style={{ minWidth: '78px' }}>
                     Log In
                   </Button>
                 </Col>
