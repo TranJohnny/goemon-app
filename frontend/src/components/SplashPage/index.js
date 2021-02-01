@@ -13,7 +13,11 @@ function SplashPage() {
 
   return (
     <>
-      <Jumbotron>
+      <Jumbotron
+        style={{ backgroundColor: 'lightblue', minHeight: '600px' }}
+        className="border-bottom"
+      >
+        <h1></h1>
         <h1>Investing for Everyone</h1>
         <p>
           Commission-free investing, plus the tools you need to put your money in motion. Sign up
