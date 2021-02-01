@@ -31,15 +31,12 @@ const getRandomData = (numPoints, price) => {
   return dataPoints;
 };
 
-// const mockData = getRandomData(42);
-
 function LineGraph({ stock }) {
   const [timeline, setTimeline] = useState(7);
   const [data, setData] = useState([]);
   const [sourceData, setSourceData] = useState([]);
   const [price, setPrice] = useState(stock.price);
   const [range, setRange] = useState({ min: 0, max: stock.price });
-  // const [price, setPrice] = useState(data ? data[data.length - 1].value : 0);
 
   useEffect(() => {
     if (timeline * 6 > sourceData.length) {
@@ -62,9 +59,8 @@ function LineGraph({ stock }) {
 
   async function handleHover(e) {
     if (e.activePayload && e.activePayload[0].payload.value !== price) {
-      // console.log(e.activePayload[0].payload.value);
       setPrice(e.activePayload[0].payload.value);
-      await setTimeout(() => {}, 250);
+      // await setTimeout(() => {}, 250);
     }
   }
 
@@ -75,6 +71,7 @@ function LineGraph({ stock }) {
       setPrice(data[data.length - 1].value);
     }
   }
+
   function handleClick(num) {
     if (num < timeline) {
       const current = sourceData.slice(timeline - num);
@@ -102,28 +99,29 @@ function LineGraph({ stock }) {
           onMouseMove={handleHover}
           onMouseLeave={handleLeave}
         >
-          <Line type="monotone" dataKey="value" stroke="#0275d8" dot={false} />
+          <Line type="monotone" dataKey="value" stroke="#0275d8" dot={false} strokeWidth={1.5} />
           <YAxis hide={true} type="number" domain={[range.min, range.max]} />
           <XAxis hide={true} tickLine={false} dataKey="label" />
           {stock.price && (
             <ReferenceLine y={stock.price} label="" stroke="#0275d8" strokeDasharray="2 2" />
           )}
           <Tooltip
-            content={<CustomTooltip />}
+            content={<CustomTooltip props={''} />}
             isAnimationActive={false}
             offset={2}
             position={{ y: 20 }}
           />
         </LineChart>
       </ResponsiveContainer>
-      <div></div>
-      <div className="d-flex justify-content-left justify-content-around">
+      <div className="d-flex justify-content-left justify-content-between border-bottom">
         <button className="astext" onClick={() => handleClick(1)}>
           <span> 1D </span>
         </button>
+
         <button className="astext" onClick={() => handleClick(7)}>
           <span> 1W </span>
         </button>
+
         <button className="astext" onClick={() => handleClick(30)}>
           <span> 1M </span>
         </button>
@@ -133,6 +131,10 @@ function LineGraph({ stock }) {
         <button className="astext" onClick={() => handleClick(365)}>
           <span> 1Y </span>
         </button>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </div>
   );

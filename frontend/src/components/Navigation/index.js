@@ -30,23 +30,25 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <>
         <Nav.Link href="#home">About Us</Nav.Link>
-        <Nav.Link href="#link">Dashboard</Nav.Link>
+        <Nav.Link as={NavLink} to="/">
+          Dashboard
+        </Nav.Link>
         <NavDropdown title="Account" id="basic-nav-dropdown" alignRight>
           <NavDropdown.ItemText as="div" style={{ margin: 'auto', padding: '5%' }}>
             <Row style={{ width: '100%' }}>
               <Col style={{ width: '100%' }}>
-                <p style={{ margin: '0 0' }}>$0.00</p>
-                <p style={{ margin: '0 0' }}>Portfolio Value</p>
+                <p style={{ margin: '0 0', fontWeight: 'bold' }}>$7842.42</p>
+                <p style={{ margin: '0 0', fontSize: '12px' }}>Portfolio Value</p>
               </Col>
               <Col style={{ width: '100%' }}>
-                <p style={{ margin: '0 0' }}>$0.00</p>
-                <p style={{ margin: '0 0' }}>Buying Power</p>
+                <p style={{ margin: '0 0', fontWeight: 'bold' }}>$140.60</p>
+                <p style={{ margin: '0 0', fontSize: '12px' }}>Buying Power</p>
               </Col>
             </Row>
           </NavDropdown.ItemText>
           <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+          <NavDropdown.Item href="#Donate">Currently Under Construction</NavDropdown.Item>
+          <NavDropdown.Item href="#Settings">Settings</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item as="button" onClick={logout}>
             <i class="fas fa-sign-out-alt"></i> Log Out
@@ -55,7 +57,7 @@ function Navigation({ isLoaded }) {
       </>
     );
     searchBar = (
-      <Form inline>
+      <Form inline style={{ width: '100%' }}>
         <FormControl type="text" placeholder="Search Stocks" className="mr-sm-2" />
         <Button variant="outline-primary">
           <i class="fas fa-search"></i>

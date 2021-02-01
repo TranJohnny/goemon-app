@@ -2,6 +2,7 @@ import { fetch } from './csrf';
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const ADD_USER_DATA = 'session/addUserData';
 
 const setUser = (user) => {
   return {
@@ -13,6 +14,13 @@ const setUser = (user) => {
 const removeUser = () => {
   return {
     type: REMOVE_USER,
+  };
+};
+
+const addUserData = (data) => {
+  return {
+    type: ADD_USER_DATA,
+    data,
   };
 };
 
@@ -57,6 +65,49 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
+export const loadUserData = (user) => async (dispatch) => {
+  console.log('LOADING USER DATA...');
+  const id = user.id;
+  const res = await fetch(`/api/users/${id}`, {
+    headers: {
+      accepts: 'application/json',
+    },
+  });
+  if (res.ok) {
+    // console.log('FETCH USER', res.data.Watchlists);
+    const data = { TWTR: 10, data: res.data.Watchlists };
+    dispatch(addUserData(data));
+  }
+};
+
+export const addToWatchlist = (user, watchlistId, stockId) => async (dispatch) => {
+  const res = await fetch(`/api/users/watchlists`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ watchlistId, stockId }),
+  });
+  if (!res.ok) {
+    throw res;
+  }
+  loadUserData(user);
+};
+
+export const removeFromWatchlist = (user, watchlistId, stockId) => async (dispatch) => {
+  const res = await fetch(`/api/users/watchlists`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ watchlistId, stockId }),
+  });
+  if (!res.ok) {
+    throw res;
+  }
+  loadUserData(user);
+};
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
@@ -69,6 +120,10 @@ const sessionReducer = (state = initialState, action) => {
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;
+      return newState;
+    case ADD_USER_DATA:
+      newState = Object.assign({}, state);
+      newState.userStocks = action.data;
       return newState;
     default:
       return state;

@@ -1,0 +1,31 @@
+.stock-row {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 24px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.stock-row__intro > h1 {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 2px;
+}
+
+.stock-row__intro > p {
+  font-size: 12px;
+}
+
+.stock-row__numbers {
+  text-align: end;
+  font-weight: 500;
+}
+
+.stock-row__price {
+  padding-bottom: 4px;
+}
+
+.stock-row__percentage {
+  color: #5ac53b;
+}

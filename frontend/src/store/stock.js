@@ -28,7 +28,7 @@ export const getOneStock = (id) => async (dispatch) => {
         symbol: newStock.symbol,
         name: newStock.companyName,
         latestPrice: newStock.latestPrice,
-        price: newStock.iexRealtimePrice,
+        price: newStock.iexRealtimePrice || newStock.latestPrice,
         change: newStock.change,
         changePercent: newStock.changePercent,
         marketCap: newStock.marketCap,
