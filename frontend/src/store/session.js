@@ -94,6 +94,20 @@ export const addToWatchlist = (user, watchlistId, stockId) => async (dispatch) =
   loadUserData(user);
 };
 
+export const removeFromWatchlist = (user, watchlistId, stockId) => async (dispatch) => {
+  const res = await fetch(`/api/users/watchlists`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ watchlistId, stockId }),
+  });
+  if (!res.ok) {
+    throw res;
+  }
+  loadUserData(user);
+};
+
 const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {

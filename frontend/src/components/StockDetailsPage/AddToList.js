@@ -1,30 +1,31 @@
 import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import * as sessionActions from '../../store/session';
-import { useEffect } from 'react';
 
 function AddToList({ isWatched, stockId }) {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state);
+  const [watched, setWatched] = useState(isWatched);
 
+  const sessionUser = useSelector((state) => state.session);
+  const watchlistId = sessionUser.userStocks.data[0].id;
+  console.log('watchlistId', watchlistId);
   // const watchlistId = sessionUser.userStocks.data.id;
 
-  useEffect(() => {
-    console.log('watchlistId', sessionUser);
-  }, []);
-
   function handleAdd() {
-    // dispatch(sessionActions.addToWatchlist(sessionUser, watchlistId, stockId));
+    dispatch(sessionActions.addToWatchlist(sessionUser, watchlistId, stockId));
+    setWatched(true);
   }
 
   function handleRemove() {
-    //Remove from Watchlist
+    dispatch(sessionActions.removeFromWatchlist(sessionUser, watchlistId, stockId));
+    setWatched(false);
   }
 
-  if (!isWatched) {
+  if (!watched) {
     return <Button onClick={handleAdd}>+ Add To List</Button>;
   } else {
-    return <Button onClick={() => console.log(isWatched)}>- Remove from List</Button>;
+    return <Button onClick={handleRemove}>- Remove from List</Button>;
   }
 }
 

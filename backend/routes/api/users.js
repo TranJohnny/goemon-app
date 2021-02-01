@@ -71,7 +71,7 @@ router.post(
   '/watchlists',
   asyncHandler(async function (req, res) {
     const { watchlistId, stockId } = req.body;
-    const recordCreated = await db.Watchlist_Portfolio.create({
+    const recordCreated = await db.Watchlist_Stock.create({
       watchlistId,
       stockId,
       createdAt: new Date(),
@@ -80,6 +80,19 @@ router.post(
     if (recordCreated) {
       const stock = await db.Stock.findByPk(stockId);
       res.json({ stock });
+    }
+  })
+);
+
+router.delete(
+  '/watchlists',
+  asyncHandler(async function (req, res) {
+    const { watchlistId, stockId } = req.body;
+    const recordDestroyed = await db.Watchlist_Stock.destroy({
+      where: { watchlistId, stockId },
+    });
+    if (recordDestroyed) {
+      res.json({ recordDestroyed });
     }
   })
 );
