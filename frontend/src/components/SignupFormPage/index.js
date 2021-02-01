@@ -15,6 +15,8 @@ import * as sessionActions from '../../store/session';
 function SignupFormPage() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -27,13 +29,16 @@ function SignupFormPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(firstName, lastName, username);
     if (password === confirmPassword) {
       setErrors([]);
       setPassword('');
       setConfirmPassword('');
-      return dispatch(sessionActions.signup({ email, username, password })).catch((res) => {
-        if (res.data && res.data.errors) setErrors(res.data.errors);
-      });
+      return dispatch(sessionActions.signup({ firstName, lastName, email, username, password }))
+        .then((res) => dispatch(sessionActions.createWatchlist(res)))
+        .catch((res) => {
+          if (res.data && res.data.errors) setErrors(res.data.errors);
+        });
     }
     setPassword('');
     setConfirmPassword('');
@@ -56,6 +61,24 @@ function SignupFormPage() {
                   </Alert>
                 ))}
               </div>
+              <Form.Group>
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  value={firstName}
+                  placeholder="Enter first name"
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  value={lastName}
+                  placeholder="Enter last name"
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </Form.Group>
               <Form.Group>
                 <Form.Label>Email</Form.Label>
                 <Form.Control

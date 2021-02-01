@@ -31,8 +31,8 @@ router.post(
   '',
   validateSignup,
   asyncHandler(async (req, res) => {
-    const { email, password, username } = req.body;
-    const user = await User.signup({ email, username, password });
+    const { firstName, lastName, email, password, username } = req.body;
+    const user = await User.signup({ firstName, lastName, email, username, password });
 
     if (!user) {
       const err = new Error('Signup failed');
@@ -69,6 +69,22 @@ router.get(
 
 router.post(
   '/watchlists',
+  asyncHandler(async function (req, res) {
+    const { userId } = req.body;
+    const recordCreated = await db.Watchlist.create({
+      userId: userId,
+      name: 'My Watchlist',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    if (recordCreated) {
+      res.json({ recordCreated });
+    }
+  })
+);
+
+router.post(
+  '/watchlists/:id(\\d+)',
   asyncHandler(async function (req, res) {
     const { watchlistId, stockId } = req.body;
     const recordCreated = await db.Watchlist_Stock.create({

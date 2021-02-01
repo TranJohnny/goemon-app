@@ -52,10 +52,12 @@ export const restoreUser = () => async (dispatch) => {
 };
 
 export const signup = (user) => async (dispatch) => {
-  const { username, email, password } = user;
+  const { firstName, lastName, username, email, password } = user;
   const response = await fetch('/api/users', {
     method: 'POST',
     body: JSON.stringify({
+      firstName,
+      lastName,
       username,
       email,
       password,
@@ -81,12 +83,28 @@ export const loadUserData = (user) => async (dispatch) => {
 };
 
 export const addToWatchlist = (user, watchlistId, stockId) => async (dispatch) => {
-  const res = await fetch(`/api/users/watchlists`, {
+  const res = await fetch(`/api/users/watchlists/${watchlistId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ watchlistId, stockId }),
+  });
+  if (!res.ok) {
+    throw res;
+  }
+  loadUserData(user);
+};
+
+export const createWatchlist = (user) => async (dispatch) => {
+  console.log('CREATE WATCHLIST', user);
+  const userId = user.id;
+  const res = await fetch(`/api/users/watchlists`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ userId }),
   });
   if (!res.ok) {
     throw res;

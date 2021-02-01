@@ -8,14 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     {
       firstName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
         validate: {
           len: [1, 50],
         },
       },
       lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        // allowNull: false,
         validate: {
           len: [1, 50],
         },
@@ -103,9 +103,11 @@ module.exports = (sequelize, DataTypes) => {
       return await User.scope('currentUser').findByPk(user.id);
     }
   };
-  User.signup = async function ({ username, email, password }) {
+  User.signup = async function ({ firstName, lastName, username, email, password }) {
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
+      firstName,
+      lastName,
       username,
       email,
       hashedPassword,

@@ -38,6 +38,8 @@ function LineGraph({ stock }) {
   const [price, setPrice] = useState(stock.price);
   const [range, setRange] = useState({ min: 0, max: stock.price });
 
+  const timelineStyle = { fontWeight: 'bold' };
+
   useEffect(() => {
     if (timeline * 6 > sourceData.length) {
       const remainingTimeline = timeline * 6 - sourceData.length;
@@ -115,21 +117,21 @@ function LineGraph({ stock }) {
       </ResponsiveContainer>
       <div className="d-flex justify-content-left justify-content-between border-bottom">
         <button className="astext" onClick={() => handleClick(1)}>
-          <span> 1D </span>
+          <span style={timeline === 1 ? timelineStyle : {}}> 1D </span>
         </button>
 
         <button className="astext" onClick={() => handleClick(7)}>
-          <span> 1W </span>
+          <span style={timeline === 7 ? timelineStyle : {}}> 1W </span>
         </button>
 
         <button className="astext" onClick={() => handleClick(30)}>
-          <span> 1M </span>
+          <span style={timeline === 30 ? timelineStyle : {}}> 1M </span>
         </button>
         <button className="astext" onClick={() => handleClick(90)}>
-          <span> 3M </span>
+          <span style={timeline === 90 ? timelineStyle : {}}> 3M </span>
         </button>
         <button className="astext" onClick={() => handleClick(365)}>
-          <span> 1Y </span>
+          <span style={timeline === 365 ? timelineStyle : {}}> 1Y </span>
         </button>
         <div></div>
         <div></div>
