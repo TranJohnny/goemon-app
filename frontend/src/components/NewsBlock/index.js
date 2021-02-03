@@ -19,7 +19,7 @@ function NewsBlock() {
               <h6>City AM</h6>
               <h5>EU watchdog wants Apple to pay €13b in back taxes after all</h5>
               <p>
-                U competition enforcers are filing to overturn a verdict which they claim was a
+                EU competition enforcers are filing to overturn a verdict which they claim was a
                 legal mistake when it abandoned an The post EU watchdog wants Apple to pay €13b in
                 back taxes after all appeared first on CityAM .
               </p>

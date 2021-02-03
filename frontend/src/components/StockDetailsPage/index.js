@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOneStock } from '../../store/stock';
@@ -39,6 +39,10 @@ function StockDetailsPage() {
     dispatch(getOneStock(id));
     // console.log('STOCK ', stock);
   }, [id]);
+
+  if (!session.user) {
+    return <Redirect to="/" />;
+  }
 
   if (stock) {
     return (
