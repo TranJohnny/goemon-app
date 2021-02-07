@@ -25,6 +25,7 @@ function DashboardPage() {
     }
     // if (!session.userStocks.data.length) {
     //   dispatch(sessionActions.createWatchlist(sessionUser));
+    // test push
     // }
   }, []);
 
